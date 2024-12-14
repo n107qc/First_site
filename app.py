@@ -27,7 +27,10 @@ def category_page(category_id):
     articles = db.get_categories_articles(category_id)
     return render_template("index.html", articles=articles)  # html-сторінка, що повертається у браузер
 
+@app.route("/articles/new", methods=['GET','POST'])
+def new_article():
 
+    return render_template("new_article.html")
 
 if __name__ == "__main__":
     app.config['TEMPLATES_AUTO_RELOAD'] = True  # автоматичне оновлення шаблонів

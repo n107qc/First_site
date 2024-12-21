@@ -15,7 +15,7 @@
         <div class="mb-3">
             <label for="articleText" class="mb-2">Текст статті</label>
             <!-- <input type="text" class="form-control" name="articleTitle" id="article_name"> -->
-            <textarea class="form-control" id="articleText" rows="5" cols="6" id="content"></textarea>
+            <textarea name="content" class="form-control" id="articleText" rows="5" cols="6" id="content"></textarea>
         </div>
         <div class="mb-3">
             <label for="articleImage" class="mb-2">Картинка до статті</label>
@@ -23,7 +23,7 @@
             <input class="form-control" id="articleImage" type="file" name="image" required>
         </div>
         <div class="mb-3">
-            <select class="form-select" aria-label="Виберіть категорію">
+            <select name="category" class="form-select" aria-label="Виберіть категорію">
                 {% for category in categories  %}
                 <option value="{{category[0]}}">{{ category[1] }}</option>
             {% endfor %}

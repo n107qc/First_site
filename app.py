@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request,flash
 from dotenv import load_dotenv
 load_dotenv()
 import os
@@ -36,14 +36,19 @@ def category_page(category_id):
 @app.route("/articles/new", methods=['GET','POST'])
 def new_article():
     if request.method == "POST":
-        image = request.files['image']
-        image.save(IMG_PATH + image.filename)
-        db.add_article(request.form['title'],request.form['content'],
-                       image.filename,1,request.form["category"])
-
-
+        if request.form["category"] != "Виберіть категорію":
+            image = request.files['image']
+            image.save(IMG_PATH + image.filename)
+            db.add_article(request.form['title'],request.form['content'],
+                        image.filename,1,request.form["category"])
+            flash('Статтю  додано','alert-success')
+        else:
+            flash('Виберіть статтю і заповніть всі поля','alert-warning')
     return render_template("new_article.html")
 
-if __name__ == "__main__":
-    app.config['TEMPLATES_AUTO_RELOAD'] = True  # автоматичне оновлення шаблонів
-    app.run(debug=True)  # Запускаємо веб-сервер з цього файлу в режимі налагодження   
+@app.route("/search")  # Вказуємо url-адресу для виклику функції
+def search():
+    articles = db.get_all_articles()
+    if request.method == 'GET':
+        query = request.args.get("query")
+        articles = db.search_article(query)
